@@ -274,7 +274,7 @@ Let's create a view to wrap a SQL query. Views allow you to reuse queries and ar
 
     Notice that the first row no longer contains the column headers. This is because we used the FIRSTROW=2 setting in the OPENROWSET statement when we created the view.
 
-6. In the **Data** hub, select the **Workspace** tab. Then select the actions ellipses **(...)** to the right of the Databases group and select **&#8635; Refresh**.
+6. In the **Data** hub, select the **Workspace** tab. Then select the actions ellipses **(...)** to the right of the Databases group and select **&#8635; Refresh**. If the workspace is blank, then refresh the browser page.
 
     ![The refresh button is highlighted.](images/refresh-databases.png "Refresh databases")
 
@@ -411,9 +411,9 @@ To test out the permissions, we will add your own account to the groups.
 
 3. Now you should see that the **tailwind-2019-writers** group is selected in the Manage ACL dialog. Check **Read**, **Write**, and **Execute** checkboxes, then select **Save**.
 
-4. In the Manage ACL screen, in the **Default permissions** screen, click on **+ Add principal**, paste the **object Id** value you copied from the **tailwind-2019-writers** security group into the **Add  principal** search box, click on **tailwind-2019-writers-suffix**, then select **Select**.
+4. In the Manage ACL screen, select the **Default permissions** tab. Enable the checkbox for **Configure default permissions**, then click on **+ Add principal**, paste the **object Id** value you copied from the **tailwind-2019-writers** security group into the **Add  principal** search box, click on **tailwind-2019-writers-suffix**, then select **Select**. Check **Read**, **Write**, and **Execute** checkboxes for the new object, then select **Save**
 
-    Now the security ACLs have been set to allow any users added to the **tailwind-current** security group to write to the **Year=2019** folder, by way of the **tailwind-2019-writers** group. These users can only manage current (2019 in this case) sales files.
+    Now the security ACLs have been set to allow any users added to the **tailwind-current** security group to write to the **Year=2019** folder, by way of the **tailwind-2019-writers** group. These users can only manage current (2019 in this case) sales files.  
 
     At the start of the following year, to revoke write access to the 2019 data they would remove the **tailwind-current-writers** security group from the **tailwind-2019-writers** group. Members of **tailwind-readers** would continue to be able to read the contents of the file system because they have been granted read and execute (list) permissions not by the ACLs but by the RBAC built in role at the level of the file system.
 
@@ -424,6 +424,8 @@ To test out the permissions, we will add your own account to the groups.
     *Default* ACLs are templates of ACLs associated with a directory that determine the access ACLs for any child items that are created under that directory. Files do not have default ACLs.
 
     Both access ACLs and default ACLs have the same structure.
+    
+    **Note** be sure to save after configuring permissions.
 
 ### Task 5: Test permissions
 
@@ -460,7 +462,7 @@ To test out the permissions, we will add your own account to the groups.
 7. Enter the following code, replacing *SUFFIX* with the unique suffix for your data lake resource (you can copy this from cell 1 above):
 
     ```python
-    df.write.parquet('abfss://wwi-02@asadatalakeSUFFIX.dfs.core.windows.net/sale-small/Year=2019/Quarter=Q4/Month=12/Day=20191231/sale-small-20191231-snappy-test.parquet')
+    df.write.parquet('abfss://wwi-02@asadatalakeSUFFIX.dfs.core.windows.net/sale-small/Year=2016/Quarter=Q4/Month=12/Day=20161231/sale-small-20161231-snappy-test.parquet')
     ```
 
 8. Run the new cell you just added. You should see a **403 error** in the output.
